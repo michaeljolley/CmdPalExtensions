@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "ExtTest (Package)": {
+      "commandName": "MsixPackage",
+      "doNotLaunchApp": true
+    },
+    "ExtTest (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
