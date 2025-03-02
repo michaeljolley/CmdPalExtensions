@@ -1,0 +1,38 @@
+// Copyright (c) Microsoft Corporation
+// The Microsoft Corporation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System;
+using System.Runtime.InteropServices;
+using System.Threading;
+using Microsoft.CommandPalette.Extensions;
+
+namespace DadJokeExtension;
+
+[ComVisible(true)]
+[Guid("16a2ba75-311c-4d5f-901f-8057c86a71c6")]
+[ComDefaultInterface(typeof(IExtension))]
+public sealed partial class DadJokeExtension : IExtension, IDisposable
+{
+    private readonly ManualResetEvent _extensionDisposedEvent;
+
+    private readonly DadJokeExtensionCommandsProvider _provider = new();
+
+    public DadJokeExtension(ManualResetEvent extensionDisposedEvent)
+    {
+        this._extensionDisposedEvent = extensionDisposedEvent;
+    }
+
+#pragma warning disable CS8632
+    public object? GetProvider(ProviderType providerType)
+#pragma warning restore CS8632 
+    {
+        return providerType switch
+        {
+            ProviderType.Commands => _provider,
+            _ => null,
+        };
+    }
+
+    public void Dispose() => this._extensionDisposedEvent.Set();
+}

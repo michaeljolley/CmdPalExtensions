@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "DadJokeExtension (Package)": {
+      "commandName": "MsixPackage",
+      "doNotLaunchApp": true
+    },
+    "DadJokeExtension (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
