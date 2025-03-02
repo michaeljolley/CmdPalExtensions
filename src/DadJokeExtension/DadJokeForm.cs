@@ -12,13 +12,11 @@ namespace DadJokeExtension
 {
     internal sealed partial class DadJokeForm : FormContent
     {
-#pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
         internal event TypedEventHandler<object, object?>? RefreshCommand;
-#pragma warning restore CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
 
         public DadJokeForm(string joke)
         {
-            zTemplateJson = $$"""
+            TemplateJson = $$"""
             {
                 "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
                 "type": "AdaptiveCard",

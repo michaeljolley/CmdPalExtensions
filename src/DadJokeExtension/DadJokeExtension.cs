@@ -23,9 +23,7 @@ public sealed partial class DadJokeExtension : IExtension, IDisposable
         this._extensionDisposedEvent = extensionDisposedEvent;
     }
 
-#pragma warning disable CS8632
     public object? GetProvider(ProviderType providerType)
-#pragma warning restore CS8632 
     {
         return providerType switch
         {
