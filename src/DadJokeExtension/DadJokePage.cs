@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -37,7 +36,6 @@ internal sealed partial class DadJokePage : ContentPage
 
 	public override IContent[] GetContent() => [jokeContent, _dadJokeForm];
 
-	[RequiresUnreferencedCode("Calls System.Text.Json.JsonSerializer.Deserialize<TValue>(String, JsonSerializerOptions)")]
 	private static async Task<DadJoke?> GetJokeAsync()
 	{
 		try
