@@ -1,7 +1,5 @@
-// Copyright (c) Microsoft Corporation
-// The Microsoft Corporation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
+﻿using System.Net.Http;
+using System.Text.Json;
 using Microsoft.CommandPalette.Extensions;
 using Microsoft.CommandPalette.Extensions.Toolkit;
 
@@ -10,13 +8,15 @@ namespace DadJokeExtension;
 public partial class DadJokeExtensionCommandsProvider : CommandProvider
 {
     private readonly ICommandItem[] _commands;
+	  internal static readonly HttpClient Client = new();
+	  internal static readonly JsonSerializerOptions Options = new() { PropertyNameCaseInsensitive = true };
 
-    public DadJokeExtensionCommandsProvider()
+	public DadJokeExtensionCommandsProvider()
     {
         DisplayName = "Random Dad Joke";
-        Icon = IconHelpers.FromRelativePath("Assets\\StoreLogo.png");
+        Icon = new("😜");
         _commands = [
-            new CommandItem(new DadJokePage()) { Title = DisplayName },
+            new CommandItem(new DadJokePage()) { Title = DisplayName, Icon = Icon },
         ];
     }
 

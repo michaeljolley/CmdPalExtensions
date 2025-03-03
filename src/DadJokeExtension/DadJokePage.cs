@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -10,61 +11,56 @@ namespace DadJokeExtension;
 
 internal sealed partial class DadJokePage : ContentPage
 {
-    private readonly DadJokeForm _dadJokeForm;
+	private readonly DadJokeForm _dadJokeForm;
 
-    internal static readonly HttpClient Client = new();
-    internal static readonly JsonSerializerOptions Options = new() { PropertyNameCaseInsensitive = true };
-    internal string jokeMarkdown = string.Empty;
+	internal static readonly HttpClient Client = new();
+	internal static readonly JsonSerializerOptions Options = new() { PropertyNameCaseInsensitive = true };
+	internal static MarkdownContent jokeContent = new();
 
-    public DadJokePage()
-    {
-        Icon = new("😜");
-        Name = "Random Dad Joke";
 
-        LoadContent();
+	private const string jokeFailure = "Awe snap! We couldn't load a joke.";
 
-        _dadJokeForm = new(jokeMarkdown);
-    }
+	public DadJokePage()
+	{
+		IsLoading = true;
 
-    public override IContent[] GetContent() => [_dadJokeForm];
-    
-    public void LoadContent()
-    {
-        IsLoading = true;
+		var t = GetJokeAsync();
+		t.ConfigureAwait(false);
 
-        string jokeFailure = "Awe snap! We couldn't load a joke.";
+		var jokeMarkdown = !string.IsNullOrEmpty(t.Result?.Joke) ? t.Result.Joke : jokeFailure;
+		jokeContent = new MarkdownContent() { Body = $"## {jokeMarkdown}" };
 
-        var t = GetJokeAsync();
-        t.ConfigureAwait(false);
+		IsLoading = false;
 
-        jokeMarkdown = !string.IsNullOrEmpty(t.Result?.Joke) ? t.Result.Joke : jokeFailure;
+		_dadJokeForm = new(jokeMarkdown);
+	}
 
-        IsLoading = false;
-    }
+	public override IContent[] GetContent() => [jokeContent, _dadJokeForm];
 
-    private async Task<DadJoke> GetJokeAsync()
-    {
-        try
-        {
-            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+	[RequiresUnreferencedCode("Calls System.Text.Json.JsonSerializer.Deserialize<TValue>(String, JsonSerializerOptions)")]
+	private static async Task<DadJoke?> GetJokeAsync()
+	{
+		try
+		{
+			Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            // Make a GET request to the icanhazdadjoke API
-            var response = await Client
-                .GetAsync("https://icanhazdadjoke.com/");
-            response.EnsureSuccessStatusCode();
+			// Make a GET request to the icanhazdadjoke API
+			var response = await Client
+					.GetAsync("https://icanhazdadjoke.com/");
+			response.EnsureSuccessStatusCode();
 
-            // Read and deserialize the response JSON into a DadJoke object
-            var responseBody = await response.Content.ReadAsStringAsync();
+			// Read and deserialize the response JSON into a DadJoke object
+			var responseBody = await response.Content.ReadAsStringAsync();
 
-            var data = JsonSerializer.Deserialize<DadJoke>(responseBody, Options);
+			var data = JsonSerializer.Deserialize<DadJoke>(responseBody, Options);
 
-            return data;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"An error occurred: {e.Message}");
-        }
+			return data;
+		}
+		catch (Exception e)
+		{
+			Console.WriteLine($"An error occurred: {e.Message}");
+		}
 
-        return null;
-    }
+		return null;
+	}
 }
