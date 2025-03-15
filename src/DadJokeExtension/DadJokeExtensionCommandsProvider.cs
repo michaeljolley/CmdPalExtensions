@@ -5,22 +5,13 @@ namespace DadJokeExtension;
 
 public partial class DadJokeExtensionCommandsProvider : CommandProvider
 {
-    private readonly ICommandItem[] _commands;
+  private readonly CommandItem jokeCommandItem = new(new DadJokePage());
 
 	public DadJokeExtensionCommandsProvider()
-    {
-        DisplayName = "Random Dad Joke";
-        Icon = new("😜");
-        _commands = [
-            new CommandItem(new DadJokePage()) { 
-              Title = DisplayName, 
-              Icon = Icon }    
-        ];
-    }
+  {
+    DisplayName = "Random Dad Joke";
+    Icon = new("😜");
+  }
 
-    public override ICommandItem[] TopLevelCommands()
-    {
-        return _commands;
-    }
-
+  public override ICommandItem[] TopLevelCommands() => [ jokeCommandItem ];
 }

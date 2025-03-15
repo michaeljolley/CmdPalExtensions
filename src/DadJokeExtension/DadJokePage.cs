@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading.Tasks;
+
 using Microsoft.CommandPalette.Extensions;
 using Microsoft.CommandPalette.Extensions.Toolkit;
 
@@ -14,40 +14,67 @@ internal sealed partial class DadJokePage : ContentPage
 	internal static readonly HttpClient Client = new();
 	internal static readonly JsonSerializerOptions Options = new() { PropertyNameCaseInsensitive = true };
 
-	private const string jokeFailure = "Awe snap! We couldn't load a joke.";
-	
-	private static readonly DadJokeForm _dadJokeForm = new(string.Empty);
+	private readonly MarkdownContent _markdownContent;
+	private readonly CopyTextCommand _copyContextCommand;
+	private readonly CommandContextItem _copyContextMenuItem;
+	private readonly RefreshCommand _refreshCommand;
+	private readonly CommandContextItem _refreshContextMenuItem;
 
 	public DadJokePage()
 	{
+		Name = "Random Dad Joke";
+		Icon = new("😜");
 		Id = "com.baldbeardedbuilder.cmdpal.randomdadjoke";
+		_markdownContent = new MarkdownContent();
 
-		_dadJokeForm.RefreshCommand += RefreshContent;
+		_copyContextCommand = new CopyTextCommand(string.Empty);
+		_copyContextMenuItem = new CommandContextItem(_copyContextCommand);
+
+		_refreshCommand = new RefreshCommand();
+		_refreshCommand.RefreshRequested += HandleRefresh;
+		_refreshContextMenuItem = new CommandContextItem(_refreshCommand);
+
+		this.Commands = [_refreshContextMenuItem];
 	}
 
 	public override IContent[] GetContent()
 	{
+		RefreshJoke();
+
+		return [_markdownContent];
+	}
+
+	public void RefreshJoke()
+	{
 		IsLoading = true;
 
-		RefreshContent();
-
-	  IsLoading = false;
-
-		return [_dadJokeForm];
-	}
-
-	public static void RefreshContent()
-	{
 		var t = GetJokeAsync();
 		t.ConfigureAwait(false);
+		var currentJoke = t.Result;
 
-		var joke = t.Result;
-		_dadJokeForm.UseJoke(string.IsNullOrEmpty(joke) ? jokeFailure : joke);
+		var markdown = string.Empty;
+
+		if (string.IsNullOrEmpty(currentJoke))
+		{
+			_copyContextCommand.Text = string.Empty;
+			this.Commands = [_refreshContextMenuItem];
+			markdown = GenerateMarkdown("Awe snap! We couldn't load a joke.");
+		}
+		else
+		{
+			_copyContextCommand.Text = currentJoke;
+			this.Commands = [_refreshContextMenuItem, _copyContextMenuItem];
+			markdown = GenerateMarkdown(currentJoke);
+		}
+
+		_markdownContent.Body = markdown;
+
+		IsLoading = false;
 	}
 
-	private void RefreshContent(object sender, object? args)
+	private void HandleRefresh(object sender, object? args)
 	{
-		RefreshContent();
+		RefreshJoke();
 		RaiseItemsChanged(1);
 	}
 
@@ -74,6 +101,15 @@ internal sealed partial class DadJokePage : ContentPage
 			Console.WriteLine($"An error occurred: {e.Message}");
 		}
 
-		return null;
+		return string.Empty;
+	}
+
+	private static string GenerateMarkdown(string content)
+	{
+		return $@"# 😜 Random Dad Joke
+
+## {content}
+
+";
 	}
 }
