@@ -10,23 +10,23 @@ namespace DadJokeExtension;
 [ComDefaultInterface(typeof(IExtension))]
 public sealed partial class DadJokeExtension : IExtension, IDisposable
 {
-    private readonly ManualResetEvent _extensionDisposedEvent;
+  private readonly ManualResetEvent _extensionDisposedEvent;
 
-    private readonly DadJokeExtensionCommandsProvider _provider = new();
+  private readonly DadJokeExtensionCommandsProvider _provider = new();
 
-    public DadJokeExtension(ManualResetEvent extensionDisposedEvent)
+  public DadJokeExtension(ManualResetEvent extensionDisposedEvent)
+  {
+    this._extensionDisposedEvent = extensionDisposedEvent;
+  }
+
+  public object? GetProvider(ProviderType providerType)
+  {
+    return providerType switch
     {
-        this._extensionDisposedEvent = extensionDisposedEvent;
-    }
+      ProviderType.Commands => _provider,
+      _ => null,
+    };
+  }
 
-    public object? GetProvider(ProviderType providerType)
-    {
-        return providerType switch
-        {
-            ProviderType.Commands => _provider,
-            _ => null,
-        };
-    }
-
-    public void Dispose() => this._extensionDisposedEvent.Set();
+  public void Dispose() => this._extensionDisposedEvent.Set();
 }

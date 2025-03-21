@@ -7,11 +7,11 @@ public partial class DadJokeExtensionCommandsProvider : CommandProvider
 {
   private readonly CommandItem jokeCommandItem = new(new DadJokePage());
 
-	public DadJokeExtensionCommandsProvider()
+  public DadJokeExtensionCommandsProvider()
   {
     DisplayName = "Random Dad Joke";
     Icon = new("😜");
   }
 
-  public override ICommandItem[] TopLevelCommands() => [ jokeCommandItem ];
+  public override ICommandItem[] TopLevelCommands() => [jokeCommandItem];
 }
