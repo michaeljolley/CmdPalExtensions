@@ -4,6 +4,8 @@ VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DadJokeExtension", "src\DadJokeExtension\DadJokeExtension.csproj", "{DFFFA177-4368-A602-476E-10F73E9188ED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotionExtension", "src\NotionExtension\NotionExtension.csproj", "{33FF22B1-C35B-2035-6C21-841EB26D3DCB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -32,6 +34,24 @@ Global
 		{DFFFA177-4368-A602-476E-10F73E9188ED}.Release|x86.ActiveCfg = Release|x86
 		{DFFFA177-4368-A602-476E-10F73E9188ED}.Release|x86.Build.0 = Release|x86
 		{DFFFA177-4368-A602-476E-10F73E9188ED}.Release|x86.Deploy.0 = Release|x86
+		{33FF22B1-C35B-2035-6C21-841EB26D3DCB}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{33FF22B1-C35B-2035-6C21-841EB26D3DCB}.Debug|ARM64.Build.0 = Debug|ARM64
+		{33FF22B1-C35B-2035-6C21-841EB26D3DCB}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{33FF22B1-C35B-2035-6C21-841EB26D3DCB}.Debug|x64.ActiveCfg = Debug|x64
+		{33FF22B1-C35B-2035-6C21-841EB26D3DCB}.Debug|x64.Build.0 = Debug|x64
+		{33FF22B1-C35B-2035-6C21-841EB26D3DCB}.Debug|x64.Deploy.0 = Debug|x64
+		{33FF22B1-C35B-2035-6C21-841EB26D3DCB}.Debug|x86.ActiveCfg = Debug|x64
+		{33FF22B1-C35B-2035-6C21-841EB26D3DCB}.Debug|x86.Build.0 = Debug|x64
+		{33FF22B1-C35B-2035-6C21-841EB26D3DCB}.Debug|x86.Deploy.0 = Debug|x64
+		{33FF22B1-C35B-2035-6C21-841EB26D3DCB}.Release|ARM64.ActiveCfg = Release|ARM64
+		{33FF22B1-C35B-2035-6C21-841EB26D3DCB}.Release|ARM64.Build.0 = Release|ARM64
+		{33FF22B1-C35B-2035-6C21-841EB26D3DCB}.Release|ARM64.Deploy.0 = Release|ARM64
+		{33FF22B1-C35B-2035-6C21-841EB26D3DCB}.Release|x64.ActiveCfg = Release|x64
+		{33FF22B1-C35B-2035-6C21-841EB26D3DCB}.Release|x64.Build.0 = Release|x64
+		{33FF22B1-C35B-2035-6C21-841EB26D3DCB}.Release|x64.Deploy.0 = Release|x64
+		{33FF22B1-C35B-2035-6C21-841EB26D3DCB}.Release|x86.ActiveCfg = Release|x64
+		{33FF22B1-C35B-2035-6C21-841EB26D3DCB}.Release|x86.Build.0 = Release|x64
+		{33FF22B1-C35B-2035-6C21-841EB26D3DCB}.Release|x86.Deploy.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -40,4 +60,3 @@ Global
 		SolutionGuid = {CEDBC581-5818-4350-BC8A-A1ECE687D357}
 	EndGlobalSection
 EndGlobal
-

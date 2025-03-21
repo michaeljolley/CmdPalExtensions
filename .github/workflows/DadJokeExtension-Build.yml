@@ -1,0 +1,28 @@
+name: DadJokeExtension-Build
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - src/DadJokeExtension/**
+  pull_request:
+    branches: [main]
+    paths:
+      - src/DadJokeExtension/**
+
+jobs:
+  build:
+    name: Build DadJokeExtension
+    runs-on: ubuntu-latest
+    env:
+      NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
+    steps:
+      - uses: actions/checkout@vs4
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+
+      - name: Restore
+        run: dotnet restore --locked-mode
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
