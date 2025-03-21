@@ -6,6 +6,5 @@
     <_SkipUpgradeNetAnalyzersNuGetWarning>true</_SkipUpgradeNetAnalyzersNuGetWarning>
     <NuGetAuditMode>direct</NuGetAuditMode>
     <PlatformTarget>$(Platform)</PlatformTarget>
-	<EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
 </Project>
