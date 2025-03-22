@@ -26,6 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EditorConfigFiles Include=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
