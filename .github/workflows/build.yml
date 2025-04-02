@@ -1,23 +1,23 @@
-name: DadJokeExtension-Build
+name: Build Extensions
 
 on:
   push:
     branches: [main]
-#    paths:
-#      - src/DadJokeExtension/**
+    paths:
+     - src/**
   pull_request:
     branches: [main]
-#    paths:
-#      - src/DadJokeExtension/**
+    paths:
+     - src/**
 
 jobs:
   build:
-    name: Build DadJokeExtension
     runs-on: windows-latest
     env:
       NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
     steps:
       - uses: actions/checkout@v4
+      
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:

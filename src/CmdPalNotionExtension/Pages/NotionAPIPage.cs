@@ -1,7 +1,7 @@
 ﻿using Microsoft.CommandPalette.Extensions;
 using Microsoft.CommandPalette.Extensions.Toolkit;
 
-namespace NotionExtension.Pages;
+namespace CmdPalNotionExtension.Pages;
 
 internal sealed partial class NotionAPIPage : ContentPage
 {

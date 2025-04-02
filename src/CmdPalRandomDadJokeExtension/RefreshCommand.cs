@@ -2,7 +2,7 @@
 using Microsoft.CommandPalette.Extensions.Toolkit;
 using Windows.Foundation;
 
-namespace DadJokeExtension;
+namespace CmdPalRandomDadJokeExtension;
 
 internal sealed partial class RefreshCommand : InvokableCommand
 {

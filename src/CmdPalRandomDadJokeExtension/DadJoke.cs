@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace DadJokeExtension;
+namespace CmdPalRandomDadJokeExtension;
 
 public sealed class DadJoke
 {

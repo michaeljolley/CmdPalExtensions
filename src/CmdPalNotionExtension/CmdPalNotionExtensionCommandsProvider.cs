@@ -3,17 +3,18 @@ using System.Threading.Tasks;
 using Microsoft.CommandPalette.Extensions;
 using Microsoft.CommandPalette.Extensions.Toolkit;
 
-using NotionExtension.Helpers;
-using NotionExtension.Pages;
+using CmdPalNotionExtension.Helpers;
+using CmdPalNotionExtension.Pages;
 
-namespace NotionExtension;
+namespace CmdPalNotionExtension;
 
-public partial class NotionExtensionCommandsProvider : CommandProvider
+public partial class CmdPalNotionExtensionCommandsProvider : CommandProvider
 {
-  public NotionExtensionCommandsProvider()
+  public CmdPalNotionExtensionCommandsProvider()
   {
     DisplayName = "Notion";
     Icon = NotionHelper.FavIcon();
+    Id = "com.baldbeardedbuilder.cmdpal.notion";
   }
 
   private readonly ICommandItem[] _commands = [];

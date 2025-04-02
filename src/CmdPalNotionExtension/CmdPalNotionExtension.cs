@@ -3,18 +3,18 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using Microsoft.CommandPalette.Extensions;
 
-namespace NotionExtension;
+namespace CmdPalNotionExtension;
 
 [ComVisible(true)]
 [Guid("D04193F6-842F-4AF4-924A-58A0CC7227F4")]
 [ComDefaultInterface(typeof(IExtension))]
-public sealed partial class NotionExtension : IExtension, IDisposable
+public sealed partial class CmdPalNotionExtension : IExtension, IDisposable
 {
     private readonly ManualResetEvent _extensionDisposedEvent;
 
-    private readonly NotionExtensionCommandsProvider _provider = new();
+    private readonly CmdPalNotionExtensionCommandsProvider _provider = new();
 
-    public NotionExtension(ManualResetEvent extensionDisposedEvent)
+    public CmdPalNotionExtension(ManualResetEvent extensionDisposedEvent)
     {
         this._extensionDisposedEvent = extensionDisposedEvent;
     }

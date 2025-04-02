@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using Microsoft.CommandPalette.Extensions;
 
-namespace DadJokeExtension;
+namespace CmdPalRandomDadJokeExtension;
 
 public class Program
 {
@@ -13,7 +13,7 @@ public class Program
     {
       using ExtensionServer server = new();
       var extensionDisposedEvent = new ManualResetEvent(false);
-      var extension = new DadJokeExtension(extensionDisposedEvent);
+      var extension = new CmdPalRandomDadJokeExtension(extensionDisposedEvent);
 
       server.RegisterExtension(() => extension);
 

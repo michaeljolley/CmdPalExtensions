@@ -3,18 +3,18 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using Microsoft.CommandPalette.Extensions;
 
-namespace DadJokeExtension;
+namespace CmdPalRandomDadJokeExtension;
 
 [ComVisible(true)]
 [Guid("16a2ba75-311c-4d5f-901f-8057c86a71c6")]
 [ComDefaultInterface(typeof(IExtension))]
-public sealed partial class DadJokeExtension : IExtension, IDisposable
+public sealed partial class CmdPalRandomDadJokeExtension : IExtension, IDisposable
 {
   private readonly ManualResetEvent _extensionDisposedEvent;
 
-  private readonly DadJokeExtensionCommandsProvider _provider = new();
+  private readonly CmdPalRandomDadJokeExtensionCommandsProvider _provider = new();
 
-  public DadJokeExtension(ManualResetEvent extensionDisposedEvent)
+  public CmdPalRandomDadJokeExtension(ManualResetEvent extensionDisposedEvent)
   {
     this._extensionDisposedEvent = extensionDisposedEvent;
   }

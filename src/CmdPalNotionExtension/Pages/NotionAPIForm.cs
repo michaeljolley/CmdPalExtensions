@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using System.Text.Json.Nodes;
 using Microsoft.CommandPalette.Extensions.Toolkit;
-using NotionExtension.Helpers;
+using CmdPalNotionExtension.Helpers;
 
-namespace NotionExtension.Pages;
+namespace CmdPalNotionExtension.Pages;
 
 internal sealed partial class NotionAPIForm : FormContent
 {

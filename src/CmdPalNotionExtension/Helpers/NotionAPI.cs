@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace NotionExtension.Helpers;
+namespace CmdPalNotionExtension.Helpers;
 
 internal static partial class NotionAPI
 {

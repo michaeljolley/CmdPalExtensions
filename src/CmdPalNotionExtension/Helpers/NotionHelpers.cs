@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Microsoft.CommandPalette.Extensions.Toolkit;
 
-namespace NotionExtension.Helpers;
+namespace CmdPalNotionExtension.Helpers;
 
 internal sealed class NotionHelper
 {

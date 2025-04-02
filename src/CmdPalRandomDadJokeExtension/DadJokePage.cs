@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.CommandPalette.Extensions;
 using Microsoft.CommandPalette.Extensions.Toolkit;
 
-namespace DadJokeExtension;
+namespace CmdPalRandomDadJokeExtension;
 
 internal sealed partial class DadJokePage : ContentPage
 {
