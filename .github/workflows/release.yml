@@ -1,4 +1,4 @@
-name: Build Release
+name: Build & Publish Release
 
 on:
   push:
@@ -29,3 +29,25 @@ jobs:
 
       # - name: Publish the package to GPR
       #   run: dotnet nuget push <my project>/bin/Release/*.nupkg
+  publish:
+    runs-on: windows-latest
+    needs: release
+    steps:
+      - name: Submit extensions to Winget
+        run: |
+
+          $wingetPackage = "MichaelJolley.CmdPalRandomDadJokeExtension"
+          $gitToken = "${{ secrets.GH_TOKEN }}"
+
+          $github = Invoke-RestMethod -uri "https://api.github.com/repos/michaeljolley/CmdPalExtensions/releases" 
+
+          $targetRelease = $github | Where-Object -Property name -match 'Release'| Select -First 1
+          $installerUserX64Url = $targetRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match 'PowerToysUserSetup.*x64' | Select -ExpandProperty browser_download_url
+          $installerMachineX64Url = $targetRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match 'PowerToysSetup.*x64' | Select -ExpandProperty browser_download_url
+          $installerUserArmUrl = $targetRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match 'PowerToysUserSetup.*arm64' | Select -ExpandProperty browser_download_url
+          $installerMachineArmUrl = $targetRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match 'PowerToysSetup.*arm64' | Select -ExpandProperty browser_download_url
+          $ver = $targetRelease.tag_name -ireplace '^v'
+
+          # getting latest wingetcreate file
+          iwr https://aka.ms/wingetcreate/latest -OutFile wingetcreate.exe
+          .\wingetcreate.exe update $wingetPackage -s -v $ver -u "$installerUserX64Url|user" "$installerMachineX64Url|machine" "$installerUserArmUrl|user" "$installerMachineArmUrl|machine" -t $gitToken
