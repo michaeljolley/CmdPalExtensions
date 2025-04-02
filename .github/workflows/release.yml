@@ -1,23 +1,18 @@
-name: Build Extensions
+name: Build Release
 
 on:
   push:
-    branches: [main]
-    paths:
-     - src/**
-  pull_request:
-    branches: [main]
-    paths:
-     - src/**
+    tags:
+      - '*'
 
 jobs:
-  build:
+  release:
     runs-on: windows-latest
     env:
       NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
@@ -26,5 +21,11 @@ jobs:
       - name: Restore
         run: dotnet restore --locked-mode
 
-      - name: Build
-        run: dotnet build --configuration Release --no-restore
+      # - name: Build
+      #   run: dotnet build --configuration Release --no-restore
+
+      # - name: Create the package
+      #   run: dotnet pack --configuration Release src/CmdPalRandomDadJokeExtension
+
+      # - name: Publish the package to GPR
+      #   run: dotnet nuget push <my project>/bin/Release/*.nupkg

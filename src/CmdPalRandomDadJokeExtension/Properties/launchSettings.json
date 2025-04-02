@@ -1,11 +1,15 @@
 {
   "profiles": {
-    "DadJokeExtension (Package)": {
+    "RandomDadJokeExtension": {
       "commandName": "MsixPackage",
-      "doNotLaunchApp": true
-    },
-    "DadJokeExtension (Unpackaged)": {
-      "commandName": "Project"
+      "commandLineArgs": "",
+      "alwaysReinstallApp": false,
+      "remoteDebugEnabled": false,
+      "allowLocalNetworkLoopbackProperty": true,
+      "authenticationMode": "Windows",
+      "doNotLaunchApp": true,
+      "remoteDebugMachine": "",
+      "nativeDebugging": false
     }
   }
 }

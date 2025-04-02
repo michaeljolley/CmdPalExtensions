@@ -10,11 +10,11 @@
 
   <Identity
     Name="CmdPalRandomDadJokeExtension"
-    Publisher="CN=Michael Jolley, O=Michael Jolley, L=Birmingham, S=Alabama, C=US"
-    Version="0.0.1.0" />
+    Publisher="CN=Michael"
+    Version="0.0.2.0" />
 
   <Properties>
-    <DisplayName>Random Dad Joke</DisplayName>
+    <DisplayName>Random Dad Joke extension for Command Palette</DisplayName>
     <PublisherDisplayName>Michael Jolley</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
