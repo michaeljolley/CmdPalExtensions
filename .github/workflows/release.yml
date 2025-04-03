@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     tags:
-      - '*'
+      - "v*.*.*"
 
 jobs:
   build_and_sign:
@@ -69,20 +69,19 @@ jobs:
           timestamp-rfc3161: http://timestamp.acs.microsoft.com
           timestamp-digest: SHA256
         
-  # release:
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     packages: write
-  #     contents: write
-  #   steps:
-  #   - uses: actions/checkout@v3
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v3
 
-  #   - name: Create a Release
-  #     uses: elgohr/Github-Release-Action@v5
-  #     env:
-  #       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #     with:
-  #       title: MyReleaseMessage
+    - uses: ncipollo/release-action@v1
+      name: Create a Release
+      with:
+        artifacts: "${{ github.workspace }}/tmp/*.msix" # Path to the signed msix files to upload as artifacts for the release. Use glob pattern to match all files in the tmp folder.
+        name: Release ${{ github.ref }}  # Use the tag as the release title
+        allowUpdates: true
         
   # publish:
   #   runs-on: windows-latest
