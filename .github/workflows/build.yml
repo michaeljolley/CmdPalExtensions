@@ -25,7 +25,4 @@ jobs:
         run: dotnet restore --locked-mode
 
       - name: Build x64
-        run: dotnet build --configuration Release --no-restore -p Platform=x64 -p GenerateAppxPackageOnBuild=true .\CmdPalExtensions.sln
-
-      - name: Build arm64
-        run: dotnet build --configuration Release --no-restore -p Platform=arm64 -p GenerateAppxPackageOnBuild=true .\CmdPalExtensions.sln
+        run: dotnet build --configuration Release --no-restore -p:Platform=x64 -p:GenerateAppxPackageOnBuild=true
