@@ -38,14 +38,9 @@ jobs:
             $version = "0.0.0.1" # fallback version if no tag is provided
           }
           Write-Host "Setting version to $version"
-          dotnet msbuild -p:Version=$version
 
       - name: Build x64
         run: |
-          # Get version number from input or tag
-          $version = if ("${{ inputs.tag }}".Length -eq 0) { "${{ inputs.tag }}.0" } else { "${{ github.ref_name }}.0" }
-          $version = $version -replace '^v', '' # Remove 'v' prefix if present for msbuild compatibility
-
           dotnet build --configuration Release -p Platform=x64 -p Version=$version -p GenerateAppxPackageOnBuild=true
 
       - name: Move misx Packages
