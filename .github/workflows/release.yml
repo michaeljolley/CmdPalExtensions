@@ -34,7 +34,7 @@ jobs:
           
           Write-Host "Setting version to $version"
           
-          dotnet build --configuration Release -p Platform=x64 -p Version=$version -p GenerateAppxPackageOnBuild=true
+          dotnet build --configuration Release -p:Platform=x64 -p:Version=$version -p:GenerateAppxPackageOnBuild=true
 
       - name: Move misx Packages
         run: |
@@ -81,9 +81,9 @@ jobs:
         name: Create Release
         with:
           artifacts: "${{ github.workspace }}/tmp/*.msix" # Path to the signed msix files to upload as artifacts for the release. Use glob pattern to match all files in the tmp folder.
-          name: if ("${{ inputs.tag }}" -match '^v(\d+\.\d+\.\d+)$') { "Release ${{ inputs.tag }}" } else { "Release ${{ github.ref_name }}" }
+          name: Release ${{ github.ref_name }}
           allowUpdates: true
-          tag: if ("${{ inputs.tag }}" -match '^v(\d+\.\d+\.\d+)$') { "${{ inputs.tag }}" } else { ${{ github.ref_name }} }
+          tag: ${{ github.ref_name }}
         
   # publish:
   #   runs-on: windows-latest
