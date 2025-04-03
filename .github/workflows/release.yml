@@ -26,10 +26,7 @@ jobs:
         with:
           dotnet-version: 9.0.x
 
-      - name: Restore
-        run: dotnet restore --locked-mode
-
-      - name: Set version number
+      - name: Build x64
         run: |
           # Set the version number for the build based on the tag or fallback to the branch name
           if ("${{ inputs.tag }}" -match '^v(\d+\.\d+\.\d+)$') {
@@ -38,10 +35,8 @@ jobs:
             $version = "0.0.1" # fallback version if no tag is provided
           }
           Write-Host "Setting version to $version"
-
-      - name: Build x64
-        run: |
-          dotnet build --configuration Release -p Platform=x64 -p Version=$version.0 -p GenerateAppxPackageOnBuild=true
+          
+          dotnet build --configuration Release -p Platform=x64 -p Version="$version.0" -p GenerateAppxPackageOnBuild=true
 
       - name: Move misx Packages
         run: |
