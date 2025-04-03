@@ -29,8 +29,24 @@ jobs:
       - name: Restore
         run: dotnet restore --locked-mode
 
+      - name: Set version number
+        run: |
+          # Set the version number for the build based on the tag or fallback to the branch name
+          if (${{ inputs.tag }} -match '^v(\d+\.\d+\.\d+)$') {
+            $version = $Matches[1]
+          } else {
+            $version = "0.0.0.1" # fallback version if no tag is provided
+          }
+          Write-Host "Setting version to $version"
+          dotnet msbuild -p:Version=$version
+
       - name: Build x64
-        run: dotnet build --configuration Release --no-restore -p:Version=${{ inputs.tag || github.ref_name }} -p:GenerateAppxPackageOnBuild=true
+        run: |
+          # Get version number from input or tag
+          $version = if ("${{ inputs.tag }}".Length -eq 0) { "${{ inputs.tag }}.0" } else { "${{ github.ref_name }}.0" }
+          $version = $version -replace '^v', '' # Remove 'v' prefix if present for msbuild compatibility
+
+          dotnet build --configuration Release --no-restore -p:Platform=x64 -p:Version=$version -p:GenerateAppxPackageOnBuild=true
 
       - name: Move misx Packages
         run: |
