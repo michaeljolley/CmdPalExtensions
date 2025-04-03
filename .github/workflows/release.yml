@@ -56,6 +56,10 @@ jobs:
       - name: Sign MSIX Packages
         run: |
           Write-Host "Signing MSIX Packages..."
+
+          cd $DestinationFolder
+
+          ls
         
   # publish:
   #   runs-on: windows-latest
