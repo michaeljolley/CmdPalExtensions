@@ -46,7 +46,7 @@ jobs:
           $version = if ("${{ inputs.tag }}".Length -eq 0) { "${{ inputs.tag }}.0" } else { "${{ github.ref_name }}.0" }
           $version = $version -replace '^v', '' # Remove 'v' prefix if present for msbuild compatibility
 
-          dotnet build --configuration Release --no-restore -p:Platform=x64 -p:Version=$version -p:GenerateAppxPackageOnBuild=true
+          dotnet build --configuration Release -p Platform=x64 -p GenerateAppxPackageOnBuild=true
 
       - name: Move misx Packages
         run: |
