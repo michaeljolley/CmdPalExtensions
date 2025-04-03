@@ -1,11 +1,6 @@
 name: Publish Release
 
 on:
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Tag for the release (e.g. v1.0.0)'
-        required: false
   push:
     tags:
       - "v*.*.*"
@@ -29,8 +24,7 @@ jobs:
       - name: Build
         run: |
           # Set the version number for the build based on the tag or fallback to the branch name
-          $version = if ("${{ inputs.tag }}" -match '^v(\d+\.\d+\.\d+)$') { "${{ inputs.tag }}.0" } else { "${{ github.ref_name }}.0" }
-          $version = $version -replace '^v', '' # Remove the 'v' prefix if present, for example: v1.0.0 -> 1.0.0
+          $version = ${{github.ref_name}} -replace '^v', ''
           
           Write-Host "Setting version to $version"
           
