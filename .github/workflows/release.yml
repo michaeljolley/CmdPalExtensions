@@ -29,14 +29,11 @@ jobs:
       - name: Build x64
         run: |
           # Set the version number for the build based on the tag or fallback to the branch name
-          if ("${{ inputs.tag }}" -match '^v(\d+\.\d+\.\d+)$') {
-            $version = $Matches[1]
-          } else {
-            $version = "0.0.1" # fallback version if no tag is provided
-          }
+          $version = if ("${{ inputs.tag }}".Length -eq 0) { "${{ inputs.tag }}.0" } else { "${{ github.ref_name }}.0" }
+
           Write-Host "Setting version to $version"
           
-          dotnet build --configuration Release -p Platform=x64 -p Version="$version.0" -p GenerateAppxPackageOnBuild=true
+          dotnet build --configuration Release -p Platform=x64 -p Version=$version -p GenerateAppxPackageOnBuild=true
 
       - name: Move misx Packages
         run: |
@@ -83,9 +80,9 @@ jobs:
         name: Create Release
         with:
           artifacts: "${{ github.workspace }}/tmp/*.msix" # Path to the signed msix files to upload as artifacts for the release. Use glob pattern to match all files in the tmp folder.
-          name: Release $version
+          name: if ("${{ inputs.tag }}".Length -eq 0) { "Release ${{ inputs.tag }}" } else { "Release ${{ github.ref_name }}" }
           allowUpdates: true
-          tag: $version
+          tag: if ("${{ inputs.tag }}".Length -eq 0) { ${{ inputs.tag }} } else { ${{ github.ref_name }} }
         
   # publish:
   #   runs-on: windows-latest
