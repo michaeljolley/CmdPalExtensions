@@ -23,7 +23,7 @@ internal sealed partial class DadJokePage : ContentPage
   public DadJokePage()
   {
     Name = "Random Dad Joke";
-    Icon = IconHelpers.FromRelativePath("Assets\\StoreLogo.png");
+    Icon = IconHelpers.FromRelativePath("Assets\\Square88x88Logo.png");
     Id = "com.baldbeardedbuilder.cmdpal.randomdadjoke";
     _markdownContent = new MarkdownContent();
 
