@@ -7,7 +7,8 @@ on:
       - '*'
 
 jobs:
-  release:
+  build_and_sign:
+    # This job builds the appx packages and signs them using the trusted signing service
     runs-on: windows-latest
     env:
       NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
@@ -53,23 +54,48 @@ jobs:
             Copy-Item -Path $msix -Destination $DestinationFolder -Force
           }
       
-      - name: Sign MSIX Packages
-        run: |
-          $DestinationFolder = Join-Path $Env:GITHUB_WORKSPACE "tmp"
-          
-          cd $DestinationFolder
+      - name: Sign files with Trusted Signing
+        uses: azure/trusted-signing-action@v0
+        with:
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          endpoint: https://eus.codesigning.azure.net/
+          trusted-signing-account-name: vscx-codesigning
+          certificate-profile-name: vscx-certificate-profile
+          files-folder: ${{ github.workspace }}\tmp # This is where the msix files are copied to for signing
+          files-folder-filter: msix
+          file-digest: SHA256
+          timestamp-rfc3161: http://timestamp.acs.microsoft.com
+          timestamp-digest: SHA256
+        
+  # release:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     packages: write
+  #     contents: write
+  #   steps:
+  #   - uses: actions/checkout@v3
 
-          ls
+  #   - name: Create a Release
+  #     uses: elgohr/Github-Release-Action@v5
+  #     env:
+  #       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #     with:
+  #       title: MyReleaseMessage
         
   # publish:
   #   runs-on: windows-latest
   #   needs: release
+  #   permissions:
+  #     packages: write
+  #     contents: write
   #   steps:
   #     - name: Submit extensions to Winget
   #       run: |
 
           # $wingetPackage = "MichaelJolley.CmdPalRandomDadJokeExtension"
-          # $gitToken = $Env:GH_TOKEN
+          # $gitToken = $Env:GH_PAT
 
           # $github = Invoke-RestMethod -uri "https://api.github.com/repos/michaeljolley/CmdPalExtensions/releases" 
 
