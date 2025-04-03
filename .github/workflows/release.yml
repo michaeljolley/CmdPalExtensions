@@ -24,7 +24,7 @@ jobs:
       - name: Build
         run: |
           # Set the version number for the build based on the tag or fallback to the branch name
-          $version = ${{github.ref_name}} -replace '^v', ''
+          $version = "${{github.ref_name}}.0" -replace '^v', ''
           
           Write-Host "Setting version to $version"
           
