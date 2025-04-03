@@ -35,13 +35,13 @@ jobs:
           if ("${{ inputs.tag }}" -match '^v(\d+\.\d+\.\d+)$') {
             $version = $Matches[1]
           } else {
-            $version = "0.0.0.1" # fallback version if no tag is provided
+            $version = "0.0.1" # fallback version if no tag is provided
           }
           Write-Host "Setting version to $version"
 
       - name: Build x64
         run: |
-          dotnet build --configuration Release -p Platform=x64 -p Version=$version -p GenerateAppxPackageOnBuild=true
+          dotnet build --configuration Release -p Platform=x64 -p Version=$version.0 -p GenerateAppxPackageOnBuild=true
 
       - name: Move misx Packages
         run: |
