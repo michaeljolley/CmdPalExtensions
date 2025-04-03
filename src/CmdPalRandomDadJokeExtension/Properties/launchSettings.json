@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "RandomDadJokeExtension": {
+    "CmdPalRandomDadJokeExtension": {
       "commandName": "MsixPackage",
       "commandLineArgs": "",
       "alwaysReinstallApp": false,

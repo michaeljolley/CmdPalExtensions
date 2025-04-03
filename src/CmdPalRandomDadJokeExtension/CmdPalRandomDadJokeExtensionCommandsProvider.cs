@@ -10,7 +10,7 @@ public partial class CmdPalRandomDadJokeExtensionCommandsProvider : CommandProvi
   public CmdPalRandomDadJokeExtensionCommandsProvider()
   {
     DisplayName = "Random Dad Joke";
-    Icon = new("😜");
+    Icon = IconHelpers.FromRelativePath("Assets\\StoreLogo.png");
     Id = "com.baldbeardedbuilder.cmdpal.randomdadjoke";
   }
 
