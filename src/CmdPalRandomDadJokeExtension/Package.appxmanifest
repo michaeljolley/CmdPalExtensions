@@ -10,7 +10,7 @@
 
   <Identity
     Name="CmdPalRandomDadJokeExtension"
-    Publisher="CN=Michael Jolley, O=Michael Jolley"
+    Publisher="CN=Michael Jolley, O=Michael Jolley, L=Odenville, S=Alabama, C=US"
     Version="0.0.2.0" />
 
   <Properties>
