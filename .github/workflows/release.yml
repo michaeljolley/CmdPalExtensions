@@ -46,7 +46,7 @@ jobs:
           $version = if ("${{ inputs.tag }}".Length -eq 0) { "${{ inputs.tag }}.0" } else { "${{ github.ref_name }}.0" }
           $version = $version -replace '^v', '' # Remove 'v' prefix if present for msbuild compatibility
 
-          dotnet build --configuration Release -p Platform=x64 -p GenerateAppxPackageOnBuild=true
+          dotnet build --configuration Release -p Platform=x64 -p Version=$version -p GenerateAppxPackageOnBuild=true
 
       - name: Move misx Packages
         run: |
@@ -93,9 +93,9 @@ jobs:
         name: Create Release
         with:
           artifacts: "${{ github.workspace }}/tmp/*.msix" # Path to the signed msix files to upload as artifacts for the release. Use glob pattern to match all files in the tmp folder.
-          name: Release ${{ github.ref_name }}  # Use the tag as the release title
+          name: Release $version
           allowUpdates: true
-          tag: ${{ inputs.tag || github.ref_name }} # Use the provided tag or fallback to the pushed tag
+          tag: $version
         
   # publish:
   #   runs-on: windows-latest
