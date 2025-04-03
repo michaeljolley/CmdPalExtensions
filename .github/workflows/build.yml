@@ -3,14 +3,10 @@ name: Build Extensions
 on:
   push:
     branches: [main]
-    paths:
-     - src/**
     tags-ignore:
       - '**'
   pull_request:
     branches: [main]
-    paths:
-     - src/**
 
 jobs:
   build:

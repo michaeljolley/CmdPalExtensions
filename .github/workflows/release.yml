@@ -1,6 +1,7 @@
 name: Build & Publish Release
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - '*'
@@ -21,33 +22,60 @@ jobs:
       - name: Restore
         run: dotnet restore --locked-mode
 
-      # - name: Build
-      #   run: dotnet build --configuration Release --no-restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore -p Platform=x64 -p GenerateAppxPackageOnBuild=true .\CmdPalExtensions.sln
 
-      # - name: Create the package
-      #   run: dotnet pack --configuration Release src/CmdPalRandomDadJokeExtension
-
-      # - name: Publish the package to GPR
-      #   run: dotnet nuget push <my project>/bin/Release/*.nupkg
-  publish:
-    runs-on: windows-latest
-    needs: release
-    steps:
-      - name: Submit extensions to Winget
+      - name: Move Appx Packages
         run: |
+          # Move the appx packages to one folder for signing
+          $msixs = Get-ChildItem -Path $GITHUB_WORKSPACE -Recurse -File -Filter "*.msix" -exclude "Microsoft.WindowsAppRuntime.*.msix"
 
-          $wingetPackage = "MichaelJolley.CmdPalRandomDadJokeExtension"
-          $gitToken = "${{ secrets.GH_TOKEN }}"
+          # write the path of each msix (relative to the git root)
+          Write-Host "Found the following msix's:"
+          foreach($msix in $msixs) {
+              # Write-Host "* " + $msix.FullName
 
-          $github = Invoke-RestMethod -uri "https://api.github.com/repos/michaeljolley/CmdPalExtensions/releases" 
+              Write-Host "*" $msix.FullName.Substring(($GITHUB_WORKSPACE).Length + 1) "`n"
+          }
 
-          $targetRelease = $github | Where-Object -Property name -match 'Release'| Select -First 1
-          $installerUserX64Url = $targetRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match 'PowerToysUserSetup.*x64' | Select -ExpandProperty browser_download_url
-          $installerMachineX64Url = $targetRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match 'PowerToysSetup.*x64' | Select -ExpandProperty browser_download_url
-          $installerUserArmUrl = $targetRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match 'PowerToysUserSetup.*arm64' | Select -ExpandProperty browser_download_url
-          $installerMachineArmUrl = $targetRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match 'PowerToysSetup.*arm64' | Select -ExpandProperty browser_download_url
-          $ver = $targetRelease.tag_name -ireplace '^v'
+          $DestinationFolder = Join-Path $GITHUB_WORKSPACE "tmp"
+          
+          if(Test-Path $DestinationFolder) {
+              Remove-Item -Path $DestinationFolder -Recurse -Force | Out-Null
+          }
+          if(-not (Test-Path $DestinationFolder)) {
+              New-Item -ItemType Directory -Path $DestinationFolder -Force | Out-Null
+          }
 
-          # getting latest wingetcreate file
-          iwr https://aka.ms/wingetcreate/latest -OutFile wingetcreate.exe
-          .\wingetcreate.exe update $wingetPackage -s -v $ver -u "$installerUserX64Url|user" "$installerMachineX64Url|machine" "$installerUserArmUrl|user" "$installerMachineArmUrl|machine" -t $gitToken
+          Write-Host "Copying msix's to $DestinationFolder..."
+
+          foreach($msix in $msixs) {
+            Copy-Item -Path $msix -Destination $DestinationFolder -Force
+          }
+      
+      - name: Sign MSIX Packages
+        run: |
+          Write-Host "Signing MSIX Packages..."
+        
+  # publish:
+  #   runs-on: windows-latest
+  #   needs: release
+  #   steps:
+  #     - name: Submit extensions to Winget
+  #       run: |
+
+          # $wingetPackage = "MichaelJolley.CmdPalRandomDadJokeExtension"
+          # $gitToken = "${{ secrets.GH_TOKEN }}"
+
+          # $github = Invoke-RestMethod -uri "https://api.github.com/repos/michaeljolley/CmdPalExtensions/releases" 
+
+          # $targetRelease = $github | Where-Object -Property name -match 'Release'| Select -First 1
+          # $installerUserX64Url = $targetRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match 'PowerToysUserSetup.*x64' | Select -ExpandProperty browser_download_url
+          # $installerMachineX64Url = $targetRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match 'PowerToysSetup.*x64' | Select -ExpandProperty browser_download_url
+          # $installerUserArmUrl = $targetRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match 'PowerToysUserSetup.*arm64' | Select -ExpandProperty browser_download_url
+          # $installerMachineArmUrl = $targetRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match 'PowerToysSetup.*arm64' | Select -ExpandProperty browser_download_url
+          # $ver = $targetRelease.tag_name -ireplace '^v'
+
+          # # getting latest wingetcreate file
+          # iwr https://aka.ms/wingetcreate/latest -OutFile wingetcreate.exe
+          # .\wingetcreate.exe update $wingetPackage -s -v $ver -u "$installerUserX64Url|user" "$installerMachineX64Url|machine" "$installerUserArmUrl|user" "$installerMachineArmUrl|machine" -t $gitToken

@@ -13,7 +13,6 @@
 		<UseWinUI>true</UseWinUI>
     <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <EnableMsixTooling>true</EnableMsixTooling>
-    <GenerateAppInstallerFile>True</GenerateAppInstallerFile>
 
 		<Nullable>enable</Nullable>
   </PropertyGroup>
@@ -39,11 +38,6 @@
     <PackageReference Include="Microsoft.Web.WebView2" />
   </ItemGroup>
 
-  <!--
-    Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution
-    Explorer "Package and Publish" context menu entry to be enabled for this project even if
-    the Windows App SDK Nuget package has not yet been restored.
-  -->
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
   </PropertyGroup>
