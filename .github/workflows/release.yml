@@ -32,7 +32,7 @@ jobs:
       - name: Set version number
         run: |
           # Set the version number for the build based on the tag or fallback to the branch name
-          if (${{ inputs.tag }} -match '^v(\d+\.\d+\.\d+)$') {
+          if ("${{ inputs.tag }}" -match '^v(\d+\.\d+\.\d+)$') {
             $version = $Matches[1]
           } else {
             $version = "0.0.0.1" # fallback version if no tag is provided
