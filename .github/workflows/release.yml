@@ -55,8 +55,8 @@ jobs:
       
       - name: Sign MSIX Packages
         run: |
-          Write-Host "Signing MSIX Packages..."
-
+          $DestinationFolder = Join-Path $Env:GITHUB_WORKSPACE "tmp"
+          
           cd $DestinationFolder
 
           ls
