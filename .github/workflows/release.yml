@@ -36,7 +36,7 @@ jobs:
           foreach($msix in $msixs) {
               # Write-Host "* " + $msix.FullName
 
-              Write-Host "*" $msix.FullName.Substring($Env:GITHUB_WORKSPACE.Length + 1) "`n"
+              Write-Host "*" $msix.Name "`n"
           }
 
           $DestinationFolder = Join-Path $Env:GITHUB_WORKSPACE "tmp"

@@ -10,7 +10,7 @@
 
   <Identity
     Name="CmdPalRandomDadJokeExtension"
-    Publisher="CN=Michael"
+    Publisher="CN=Michael Jolley, O=Michael Jolley"
     Version="0.0.2.0" />
 
   <Properties>
