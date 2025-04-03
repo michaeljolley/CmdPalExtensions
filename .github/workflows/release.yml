@@ -1,4 +1,4 @@
-name: Build & Publish Release
+name: Publish Release
 
 on:
   workflow_dispatch:
@@ -28,17 +28,17 @@ jobs:
       - name: Move Appx Packages
         run: |
           # Move the appx packages to one folder for signing
-          $msixs = Get-ChildItem -Path $GITHUB_WORKSPACE -Recurse -File -Filter "*.msix" -exclude "Microsoft.WindowsAppRuntime.*.msix"
+          $msixs = Get-ChildItem -Path $Env:GITHUB_WORKSPACE -Recurse -File -Filter "*.msix" -exclude "Microsoft.WindowsAppRuntime.*.msix"
 
           # write the path of each msix (relative to the git root)
           Write-Host "Found the following msix's:"
           foreach($msix in $msixs) {
               # Write-Host "* " + $msix.FullName
 
-              Write-Host "*" $msix.FullName.Substring(($GITHUB_WORKSPACE).Length + 1) "`n"
+              Write-Host "*" $msix.FullName.Substring($Env:GITHUB_WORKSPACE.Length + 1) "`n"
           }
 
-          $DestinationFolder = Join-Path $GITHUB_WORKSPACE "tmp"
+          $DestinationFolder = Join-Path $Env:GITHUB_WORKSPACE "tmp"
           
           if(Test-Path $DestinationFolder) {
               Remove-Item -Path $DestinationFolder -Recurse -Force | Out-Null
@@ -65,7 +65,7 @@ jobs:
   #       run: |
 
           # $wingetPackage = "MichaelJolley.CmdPalRandomDadJokeExtension"
-          # $gitToken = "${{ secrets.GH_TOKEN }}"
+          # $gitToken = $Env:GH_TOKEN
 
           # $github = Invoke-RestMethod -uri "https://api.github.com/repos/michaeljolley/CmdPalExtensions/releases" 
 
