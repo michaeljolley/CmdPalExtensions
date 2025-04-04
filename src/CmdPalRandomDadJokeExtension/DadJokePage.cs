@@ -74,7 +74,6 @@ internal sealed partial class DadJokePage : ContentPage
 
   private void HandleRefresh(object sender, object? args)
   {
-    RefreshJoke();
     RaiseItemsChanged(1);
   }
 
