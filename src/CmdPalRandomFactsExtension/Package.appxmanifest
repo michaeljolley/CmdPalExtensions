@@ -34,7 +34,7 @@
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
         DisplayName="Random Facts"
-        Description="Learn a random fact"
+        Description="Learn a random new fact"
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square300x300Logo.png"
         Square44x44Logo="Assets\Square88x88Logo.png">
@@ -60,7 +60,7 @@
             Id="PG-SP-ID"
             PublicFolder="Public"
             DisplayName="Random Facts"
-            Description="Learn a new fact everyday in Command Palette">
+            Description="Learn a random new fact">
             <uap3:Properties>
               <CmdPalProvider>
                 <Activation>
