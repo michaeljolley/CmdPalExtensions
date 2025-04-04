@@ -1,0 +1,36 @@
+name: Feature Request
+description: Suggest a new feature or enhancement.
+title: "[Feature]: "
+labels: ["feature"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to suggest a new feature! We appreciate your input and ideas. Please fill out the following details to help us understand your request better.
+  - type: dropdown
+    id: extension
+    attributes:
+      label: Extension
+      description: What extension do you want to suggest a feature for?
+      options:
+        - Random Dad Joke
+        - Random Fact
+        - Notion
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature Description
+      description: Please provide a detailed description of the feature you would like to see. Include any relevant details or use cases that can help us understand your request better.
+      placeholder: Describe the feature you have in mind...
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://bbb.dev/coc). 
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
