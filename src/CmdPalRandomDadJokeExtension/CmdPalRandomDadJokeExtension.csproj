@@ -9,8 +9,7 @@
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
     <RuntimeIdentifiers>win-x64;win-arm64</RuntimeIdentifiers>
-		<Platform>x64,ARM64</Platform>
-
+  
 		<UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
     <PublishProfile>Properties/PublishProfiles/win-$(Platform).pubxml</PublishProfile>
