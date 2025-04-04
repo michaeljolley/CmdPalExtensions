@@ -14,8 +14,7 @@ body:
       description: What extension do you want to suggest a feature for?
       options:
         - Random Dad Joke
-        - Random Fact
-        - Notion
+        - Random Facts
     validations:
       required: true
   - type: textarea

@@ -15,7 +15,6 @@ body:
       options:
         - Random Dad Joke
         - Random Fact
-        - Notion
     validations:
       required: true
   - type: input
