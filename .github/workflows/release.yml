@@ -34,8 +34,9 @@ jobs:
               
       - name: Build
         run: |
-          dotnet build --configuration Release -p:GenerateAppxPackageOnBuild=true
-
+          dotnet build --configuration Release -p:GenerateAppxPackageOnBuild=true -p:Platform=x64
+          dotnet build --configuration Release -p:GenerateAppxPackageOnBuild=true -p:Platform=arm64
+          
       - name: Move misx Packages
         run: |
           # Move the misx packages to one folder for signing
