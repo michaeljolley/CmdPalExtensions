@@ -50,7 +50,7 @@
       <Extensions>
         <com:Extension Category="windows.comServer">
           <com:ComServer>
-            <com:ExeServer Executable="DadJokeExtension.exe" Arguments="-RegisterProcessAsComServer" DisplayName="Random Dad Joke">
+            <com:ExeServer Executable="CmdPalRandomDadJokeExtension.exe" Arguments="-RegisterProcessAsComServer" DisplayName="Random Dad Joke">
               <com:Class Id="16a2ba75-311c-4d5f-901f-8057c86a71c6" DisplayName="Random Dad Joke" />
             </com:ExeServer>
           </com:ComServer>
@@ -60,7 +60,7 @@
             Id="PG-SP-ID"
             PublicFolder="Public"
             DisplayName="Random Dad Joke"
-            Description="Random dad jokes for Command Palette">
+            Description="Laugh or groan at a random dad joke.">
             <uap3:Properties>
               <CmdPalProvider>
                 <Activation>
