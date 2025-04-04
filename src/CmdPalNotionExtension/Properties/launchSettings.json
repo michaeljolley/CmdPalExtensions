@@ -1,11 +1,15 @@
 {
   "profiles": {
-    "NotionExtension (Package)": {
+    "CmdPalNotionExtension": {
       "commandName": "MsixPackage",
-      "doNotLaunchApp": true
-    },
-    "NotionExtension (Unpackaged)": {
-      "commandName": "Project"
+      "commandLineArgs": "",
+      "alwaysReinstallApp": false,
+      "remoteDebugEnabled": false,
+      "allowLocalNetworkLoopbackProperty": true,
+      "authenticationMode": "Windows",
+      "doNotLaunchApp": true,
+      "remoteDebugMachine": "",
+      "nativeDebugging": false
     }
   }
 }

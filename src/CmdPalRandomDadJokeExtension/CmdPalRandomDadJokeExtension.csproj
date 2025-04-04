@@ -13,7 +13,7 @@
 
 		<UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
-    <PublishProfile>win-$(Platform).pubxml</PublishProfile>
+    <PublishProfile>Properties/PublishProfiles/win-$(Platform).pubxml</PublishProfile>
 
 		<Nullable>enable</Nullable>
   </PropertyGroup>

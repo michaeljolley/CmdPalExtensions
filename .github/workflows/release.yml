@@ -28,7 +28,7 @@ jobs:
           
           Write-Host "Setting version to $version"
           
-          dotnet build --configuration Release -p:Platform=x64 -p:Version=$version -p:GenerateAppxPackageOnBuild=true
+          dotnet build --configuration Release -p:Version="$version" -p:GenerateAppxPackageOnBuild=true
 
       - name: Move misx Packages
         run: |
