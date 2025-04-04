@@ -21,14 +21,20 @@ jobs:
         with:
           dotnet-version: 9.0.x
 
-      - name: Build
+      - name: Update Version in manifest
+        working-directory: './src/CmdPalRandomDadJokeExtension'
         run: |
-          # Set the version number for the build based on the tag or fallback to the branch name
           $version = "${{github.ref_name}}.0" -replace '^v', ''
           
-          Write-Host "Setting version to $version"
-          
-          dotnet build --configuration Release -p:Version="$version" -p:GenerateAppxPackageOnBuild=true
+          $xmlFilePath = "Package.appxmanifest"
+          [xml]$xml = Get-Content $xmlFilePath
+          $xml.Package.Identity.Version = $version
+          $xml.Save($xmlFilePath)
+          Write-Output "Version updated to $version in $xmlFilePath"
+              
+      - name: Build
+        run: |
+          dotnet build --configuration Release -p:GenerateAppxPackageOnBuild=true
 
       - name: Move misx Packages
         run: |

@@ -9,8 +9,8 @@
   IgnorableNamespaces="uap uap3 rescap">
 
   <Identity
-    Name="CmdPalNotionExtension"
-    Publisher="CN=Michael Jolley, O=Michael Jolley, L=Birmingham, S=Alabama, C=US"
+    Name="MichaelJolley.CmdPalNotionExtension"
+    Publisher="CN=Michael Jolley, O=Michael Jolley, L=Odenville, S=Alabama, C=US"
     Version="0.0.1.0" />
 
   <Properties>
@@ -34,7 +34,7 @@
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
         DisplayName="Notion extension for Command Palette"
-        Description="Notion extension for Command Palette"
+        Description="Command Palette extension for Notion"
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png">
@@ -53,8 +53,8 @@
           <uap3:AppExtension Name="com.microsoft.commandpalette"
             Id="PG-SP-ID"
             PublicFolder="Public"
-            DisplayName="Random Dad Joke"
-            Description="Random Dad Joke">
+            DisplayName="Notion"
+            Description="Manage Notion pages and databases from Command Palette">
             <uap3:Properties>
               <CmdPalProvider>
                 <Activation>
