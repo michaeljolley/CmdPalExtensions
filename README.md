@@ -21,5 +21,5 @@ The current list of extensions are:
 
 ## Contributing
 
-Want to contribute? Check out our [Code of Conduct](CODE_OF_CONDUCT.md) and
-[Contributing](CONTRIBUTING.md) docs. Contributions of any kind welcome!
+Want to contribute? Check out our [Code of Conduct](https://github.com/michaeljolley/CmdPalExtensions?tab=readme-ov-file#coc-ov-file) and
+[Contributing](https://github.com/michaeljolley/CmdPalExtensions/blob/main/.github/CONTRIBUTING.md) docs. Contributions of any kind welcome!
