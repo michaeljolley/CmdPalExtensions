@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CmdPalRandomDadJokeExtension", "src\CmdPalRandomDadJokeExtension\CmdPalRandomDadJokeExtension.csproj", "{CDDFFDE5-89FC-4FC3-8FE3-70366047A0D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CmdPalRandomFactsExtension", "src\CmdPalRandomFactsExtension\CmdPalRandomFactsExtension.csproj", "{EA4DCC50-2C51-4AD1-A161-932C8C118C49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CmdPalNotionExtension", "src\CmdPalNotionExtension\CmdPalNotionExtension.csproj", "{6A62A5BD-7803-4F02-9A16-302304D306A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|arm64 = Debug|arm64
@@ -17,19 +21,50 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{CDDFFDE5-89FC-4FC3-8FE3-70366047A0D6}.Debug|arm64.ActiveCfg = Debug|ARM64
 		{CDDFFDE5-89FC-4FC3-8FE3-70366047A0D6}.Debug|arm64.Build.0 = Debug|ARM64
+		{CDDFFDE5-89FC-4FC3-8FE3-70366047A0D6}.Debug|arm64.Deploy.0 = Debug|ARM64
 		{CDDFFDE5-89FC-4FC3-8FE3-70366047A0D6}.Debug|x64.ActiveCfg = Debug|x64
 		{CDDFFDE5-89FC-4FC3-8FE3-70366047A0D6}.Debug|x64.Build.0 = Debug|x64
+		{CDDFFDE5-89FC-4FC3-8FE3-70366047A0D6}.Debug|x64.Deploy.0 = Debug|x64
 		{CDDFFDE5-89FC-4FC3-8FE3-70366047A0D6}.Release|arm64.ActiveCfg = Release|ARM64
 		{CDDFFDE5-89FC-4FC3-8FE3-70366047A0D6}.Release|arm64.Build.0 = Release|ARM64
 		{CDDFFDE5-89FC-4FC3-8FE3-70366047A0D6}.Release|arm64.Deploy.0 = Release|ARM64
 		{CDDFFDE5-89FC-4FC3-8FE3-70366047A0D6}.Release|x64.ActiveCfg = Release|x64
 		{CDDFFDE5-89FC-4FC3-8FE3-70366047A0D6}.Release|x64.Build.0 = Release|x64
 		{CDDFFDE5-89FC-4FC3-8FE3-70366047A0D6}.Release|x64.Deploy.0 = Release|x64
+		{EA4DCC50-2C51-4AD1-A161-932C8C118C49}.Debug|arm64.ActiveCfg = Debug|x64
+		{EA4DCC50-2C51-4AD1-A161-932C8C118C49}.Debug|arm64.Build.0 = Debug|x64
+		{EA4DCC50-2C51-4AD1-A161-932C8C118C49}.Debug|arm64.Deploy.0 = Debug|x64
+		{EA4DCC50-2C51-4AD1-A161-932C8C118C49}.Debug|x64.ActiveCfg = Debug|x64
+		{EA4DCC50-2C51-4AD1-A161-932C8C118C49}.Debug|x64.Build.0 = Debug|x64
+		{EA4DCC50-2C51-4AD1-A161-932C8C118C49}.Debug|x64.Deploy.0 = Debug|x64
+		{EA4DCC50-2C51-4AD1-A161-932C8C118C49}.Release|arm64.ActiveCfg = Release|ARM64
+		{EA4DCC50-2C51-4AD1-A161-932C8C118C49}.Release|arm64.Build.0 = Release|ARM64
+		{EA4DCC50-2C51-4AD1-A161-932C8C118C49}.Release|arm64.Deploy.0 = Release|ARM64
+		{EA4DCC50-2C51-4AD1-A161-932C8C118C49}.Release|x64.ActiveCfg = Release|x64
+		{EA4DCC50-2C51-4AD1-A161-932C8C118C49}.Release|x64.Build.0 = Release|x64
+		{EA4DCC50-2C51-4AD1-A161-932C8C118C49}.Release|x64.Deploy.0 = Release|x64
+		{6A62A5BD-7803-4F02-9A16-302304D306A3}.Debug|arm64.ActiveCfg = Debug|x64
+		{6A62A5BD-7803-4F02-9A16-302304D306A3}.Debug|arm64.Build.0 = Debug|x64
+		{6A62A5BD-7803-4F02-9A16-302304D306A3}.Debug|arm64.Deploy.0 = Debug|x64
+		{6A62A5BD-7803-4F02-9A16-302304D306A3}.Debug|x64.ActiveCfg = Debug|x64
+		{6A62A5BD-7803-4F02-9A16-302304D306A3}.Debug|x64.Build.0 = Debug|x64
+		{6A62A5BD-7803-4F02-9A16-302304D306A3}.Debug|x64.Deploy.0 = Debug|x64
+		{6A62A5BD-7803-4F02-9A16-302304D306A3}.Release|arm64.ActiveCfg = Release|ARM64
+		{6A62A5BD-7803-4F02-9A16-302304D306A3}.Release|arm64.Build.0 = Release|ARM64
+		{6A62A5BD-7803-4F02-9A16-302304D306A3}.Release|arm64.Deploy.0 = Release|ARM64
+		{6A62A5BD-7803-4F02-9A16-302304D306A3}.Release|x64.ActiveCfg = Release|x64
+		{6A62A5BD-7803-4F02-9A16-302304D306A3}.Release|x64.Build.0 = Release|x64
+		{6A62A5BD-7803-4F02-9A16-302304D306A3}.Release|x64.Deploy.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{CDDFFDE5-89FC-4FC3-8FE3-70366047A0D6} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+		{EA4DCC50-2C51-4AD1-A161-932C8C118C49} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+		{6A62A5BD-7803-4F02-9A16-302304D306A3} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {168E4B57-9267-45E3-8D3D-6622BB3DC7BF}
 	EndGlobalSection
 EndGlobal
