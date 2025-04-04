@@ -1,9 +1,14 @@
-name: Publish Release
+name: Publish Notion Extension
 
 on:
   push:
     tags:
-      - "v*.*.*"
+      - "notion/v*.*.*"
+
+env:
+  project: CmdPalNotionExtension
+  packageName: MichaelJolley.NotionForCmdPal
+  tag_prefix: "notion/v"
 
 jobs:
   build_sign_release:
@@ -22,9 +27,9 @@ jobs:
           dotnet-version: 9.0.x
 
       - name: Update Version in manifest
-        working-directory: './src/CmdPalRandomDadJokeExtension'
+        working-directory: "./src/${{ env.project }}"
         run: |
-          $version = "${{github.ref_name}}.0" -replace '^v', ''
+          $version = "${{github.ref_name}}.0" -replace '^${{ env.tag_prefix }}', ''
           
           $xmlFilePath = "Package.appxmanifest"
           [xml]$xml = Get-Content $xmlFilePath
@@ -40,7 +45,7 @@ jobs:
       - name: Move misx Packages
         run: |
           # Move the misx packages to one folder for signing
-          $msixs = Get-ChildItem -Path $Env:GITHUB_WORKSPACE -Recurse -File -Filter "*.msix" -exclude "Microsoft.WindowsAppRuntime.*.msix"
+          $msixs = Get-ChildItem -Path $Env:GITHUB_WORKSPACE -Recurse -File -Filter "${{ env.project }}*.msix" -exclude "Microsoft.WindowsAppRuntime.*.msix"
 
           # write the path of each msix (relative to the git root)
           Write-Host "Found the following msix's:"
@@ -82,7 +87,7 @@ jobs:
         name: Create Release
         with:
           artifacts: "${{ github.workspace }}/tmp/*.msix" # Path to the signed msix files to upload as artifacts for the release. Use glob pattern to match all files in the tmp folder.
-          name: Release ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
           allowUpdates: true
           tag: ${{ github.ref_name }}
         

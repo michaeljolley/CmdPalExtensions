@@ -1,0 +1,115 @@
+name: Publish Random Facts Extension
+
+on:
+  push:
+    tags:
+      - "facts/v*.*.*"
+
+env:
+  project: CmdPalRandomFactsExtension
+  packageName: MichaelJolley.RandomFactsForCmdPal
+  tag_prefix: "facts/v"
+
+jobs:
+  build_sign_release:
+    # This job builds the appx packages and signs them using the trusted signing service
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    env:
+      NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Update Version in manifest
+        working-directory: "./src/${{ env.project }}"
+        run: |
+          $version = "${{github.ref_name}}.0" -replace '^${{ env.tag_prefix }}', ''
+          
+          $xmlFilePath = "Package.appxmanifest"
+          [xml]$xml = Get-Content $xmlFilePath
+          $xml.Package.Identity.Version = $version
+          $xml.Save($xmlFilePath)
+          Write-Output "Version updated to $version in $xmlFilePath"
+              
+      - name: Build
+        run: |
+          dotnet build --configuration Release -p:GenerateAppxPackageOnBuild=true -p:Platform=x64
+          dotnet build --configuration Release -p:GenerateAppxPackageOnBuild=true -p:Platform=arm64
+          
+      - name: Move misx Packages
+        run: |
+          # Move the misx packages to one folder for signing
+          $msixs = Get-ChildItem -Path $Env:GITHUB_WORKSPACE -Recurse -File -Filter "${{ env.project }}*.msix" -exclude "Microsoft.WindowsAppRuntime.*.msix"
+
+          # write the path of each msix (relative to the git root)
+          Write-Host "Found the following msix's:"
+          foreach($msix in $msixs) {
+              Write-Host "*" $msix.Name "`n"
+          }
+
+          $DestinationFolder = Join-Path $Env:GITHUB_WORKSPACE "tmp"
+          
+          if(Test-Path $DestinationFolder) {
+              Remove-Item -Path $DestinationFolder -Recurse -Force | Out-Null
+          }
+          if(-not (Test-Path $DestinationFolder)) {
+              New-Item -ItemType Directory -Path $DestinationFolder -Force | Out-Null
+          }
+
+          Write-Host "Copying msix's to $DestinationFolder..."
+
+          foreach($msix in $msixs) {
+            Copy-Item -Path $msix -Destination $DestinationFolder -Force
+          }
+      
+      - name: Sign files with Trusted Signing
+        uses: azure/trusted-signing-action@v0
+        with:
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          endpoint: https://eus.codesigning.azure.net/
+          trusted-signing-account-name: baldbeardedbuilder
+          certificate-profile-name: baldbeardedbuilder
+          files-folder: ${{ github.workspace }}\tmp # This is where the msix files are copied to for signing
+          files-folder-filter: msix
+          file-digest: SHA256
+          timestamp-rfc3161: http://timestamp.acs.microsoft.com
+          timestamp-digest: SHA256
+
+      - uses: ncipollo/release-action@v1
+        name: Create Release
+        with:
+          artifacts: "${{ github.workspace }}/tmp/*.msix" # Path to the signed msix files to upload as artifacts for the release. Use glob pattern to match all files in the tmp folder.
+          name: ${{ github.ref_name }}
+          allowUpdates: true
+          tag: ${{ github.ref_name }}
+        
+  # publish:
+  #   runs-on: windows-latest
+  #   needs: build_sign_release
+  #   permissions:
+  #     packages: write
+  #     contents: write
+  #   steps:
+  #     - name: Submit extensions to Winget
+  #       run: |
+  #         $wingetPackage = "MichaelJolley.CmdPalRandomDadJokeExtension"
+  #         $gitToken = $Env:GITHUB_TOKEN
+
+  #         $github = Invoke-RestMethod -uri "https://api.github.com/repos/michaeljolley/CmdPalExtensions/releases" 
+  #         $targetRelease = $github | Where-Object -Property name -match 'Release'| Select -First 1
+  #         _0.0.4.0_x64.msix
+  #         $installerX64Url = $targetRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match 'CmdPalRandomDadJokeExtension*x64' | Select -ExpandProperty browser_download_url
+  #         # $installerArmUrl = $targetRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match 'CmdPalRandomDadJokeExtension*arm64' | Select -ExpandProperty browser_download_url
+  #         $ver = $targetRelease.tag_name -ireplace '^v'
+
+  #         # getting latest wingetcreate file
+  #         iwr https://aka.ms/wingetcreate/latest -OutFile wingetcreate.exe
+  #         .\wingetcreate.exe update $wingetPackage -s -v $ver -u "$installerX64Url|machine" -t $gitToken

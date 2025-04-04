@@ -22,4 +22,6 @@ jobs:
           dotnet-version: 9.0.x
 
       - name: Build
-        run: dotnet build --configuration Release -p Platform=x64 -p GenerateAppxPackageOnBuild=true
+        run: |
+          dotnet build --configuration Release -p:GenerateAppxPackageOnBuild=true -p:Platform=x64
+          dotnet build --configuration Release -p:GenerateAppxPackageOnBuild=true -p:Platform=arm64
