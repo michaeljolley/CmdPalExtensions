@@ -15,6 +15,7 @@
     <PublishProfile>Properties/PublishProfiles/win-$(Platform).pubxml</PublishProfile>
 
 		<Nullable>enable</Nullable>
+		<WinAppSdkSelfContained>true</WinAppSdkSelfContained>
   </PropertyGroup>
 
   <ItemGroup>

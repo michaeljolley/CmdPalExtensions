@@ -34,7 +34,7 @@ internal sealed partial class DadJokePage : ContentPage
     _refreshCommand.RefreshRequested += HandleRefresh;
     _refreshContextMenuItem = new CommandContextItem(_refreshCommand);
 
-    this.Commands = [_refreshContextMenuItem];
+    Commands = [_refreshContextMenuItem, _copyContextMenuItem];
   }
 
   public override IContent[] GetContent()
@@ -57,13 +57,13 @@ internal sealed partial class DadJokePage : ContentPage
     if (string.IsNullOrEmpty(currentJoke))
     {
       _copyContextCommand.Text = string.Empty;
-      this.Commands = [_refreshContextMenuItem];
+      Commands = [_refreshContextMenuItem];
       markdown = GenerateMarkdown("Awe snap! We couldn't load a joke.");
     }
     else
     {
       _copyContextCommand.Text = currentJoke;
-      this.Commands = [_refreshContextMenuItem, _copyContextMenuItem];
+      Commands = [_refreshContextMenuItem, _copyContextMenuItem];
       markdown = GenerateMarkdown(currentJoke);
     }
 

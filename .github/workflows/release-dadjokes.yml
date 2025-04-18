@@ -91,25 +91,27 @@ jobs:
           allowUpdates: true
           tag: ${{ github.ref_name }}
         
-  # publish:
-  #   runs-on: windows-latest
-  #   needs: build_sign_release
-  #   permissions:
-  #     packages: write
-  #     contents: write
-  #   steps:
-  #     - name: Submit extensions to Winget
-  #       run: |
-  #         $wingetPackage = "MichaelJolley.CmdPalRandomDadJokeExtension"
-  #         $gitToken = $Env:GITHUB_TOKEN
+  publish:
+    runs-on: windows-latest
+    needs: build_sign_release
+    permissions:
+      packages: write
+      contents: write
+    steps:
+      - name: Submit extensions to Winget
+        run: |
+          $wingetPackage = $Env:packageName
+          $gitToken = $Env:GITHUB_TOKEN
+          $tagPrefix = "^$Env:tag_prefix"
 
-  #         $github = Invoke-RestMethod -uri "https://api.github.com/repos/michaeljolley/CmdPalExtensions/releases" 
-  #         $targetRelease = $github | Where-Object -Property name -match 'Release'| Select -First 1
-  #         _0.0.4.0_x64.msix
-  #         $installerX64Url = $targetRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match 'CmdPalRandomDadJokeExtension*x64' | Select -ExpandProperty browser_download_url
-  #         # $installerArmUrl = $targetRelease | Select -ExpandProperty assets -First 1 | Where-Object -Property name -match 'CmdPalRandomDadJokeExtension*arm64' | Select -ExpandProperty browser_download_url
-  #         $ver = $targetRelease.tag_name -ireplace '^v'
+          $github = Invoke-RestMethod -uri "https://api.github.com/repos/michaeljolley/CmdPalExtensions/releases" 
+          $targetRelease = $github | Where-Object -Property name -match $tagPrefix| Select -First 1
 
-  #         # getting latest wingetcreate file
-  #         iwr https://aka.ms/wingetcreate/latest -OutFile wingetcreate.exe
-  #         .\wingetcreate.exe update $wingetPackage -s -v $ver -u "$installerX64Url|machine" -t $gitToken
+          $installerArmUrl = $targetRelease.assets | Where-Object { $_.name -match 'ARM64' } | Select-Object -ExpandProperty browser_download_url
+          $installerX64Url = $targetRelease.assets | Where-Object { $_.name -match 'x64' } | Select-Object -ExpandProperty browser_download_url
+
+          $ver = $targetRelease.tag_name -ireplace $tagPrefix
+
+          # getting latest wingetcreate file
+          iwr https://aka.ms/wingetcreate/latest -OutFile wingetcreate.exe
+          .\wingetcreate.exe update $wingetPackage -s -v $ver -u "$installerX64Url|machine" -v $ver -u "$installerArmUrl|machine" -t $gitToken
