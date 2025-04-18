@@ -33,7 +33,7 @@ internal sealed partial class FactsPage : ContentPage
     _refreshCommand.RefreshRequested += HandleRefresh;
     _refreshContextMenuItem = new CommandContextItem(_refreshCommand);
 
-    this.Commands = [_refreshContextMenuItem];
+    Commands = [_refreshContextMenuItem, _copyContextMenuItem];
   }
 
   public override IContent[] GetContent()
@@ -56,13 +56,13 @@ internal sealed partial class FactsPage : ContentPage
     if (string.IsNullOrEmpty(currentFact))
     {
       _copyContextCommand.Text = string.Empty;
-      this.Commands = [_refreshContextMenuItem];
+      Commands = [_refreshContextMenuItem];
       markdown = GenerateMarkdown("Awe snap! We couldn't load a fact.");
     }
     else
     {
       _copyContextCommand.Text = currentFact;
-      this.Commands = [_refreshContextMenuItem, _copyContextMenuItem];
+      Commands = [_refreshContextMenuItem, _copyContextMenuItem];
       markdown = GenerateMarkdown(currentFact);
     }
 
