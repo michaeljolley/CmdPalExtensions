@@ -34,12 +34,11 @@ internal sealed partial class FactsPage : ContentPage
     _refreshContextMenuItem = new CommandContextItem(_refreshCommand);
 
     Commands = [_refreshContextMenuItem, _copyContextMenuItem];
+    RefreshFact();
   }
 
   public override IContent[] GetContent()
   {
-    RefreshFact();
-
     return [_markdownContent];
   }
 
@@ -73,7 +72,8 @@ internal sealed partial class FactsPage : ContentPage
 
   private void HandleRefresh(object sender, object? args)
   {
-    RaiseItemsChanged(1);
+    RefreshFact();
+    RaiseItemsChanged(0);
   }
 
   private static async Task<string?> GetFactAsync()

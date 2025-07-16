@@ -5,9 +5,7 @@ using Microsoft.CommandPalette.Extensions;
 
 namespace CmdPalRandomFactsExtension;
 
-[ComVisible(true)]
 [Guid("BC38F10C-DBFF-43A7-9FB1-E6A10209AF76")]
-[ComDefaultInterface(typeof(IExtension))]
 public sealed partial class CmdPalRandomFactsExtension : IExtension, IDisposable
 {
   private readonly ManualResetEvent _extensionDisposedEvent;

@@ -35,12 +35,11 @@ internal sealed partial class DadJokePage : ContentPage
     _refreshContextMenuItem = new CommandContextItem(_refreshCommand);
 
     Commands = [_refreshContextMenuItem, _copyContextMenuItem];
+    RefreshJoke();
   }
 
   public override IContent[] GetContent()
   {
-    RefreshJoke();
-
     return [_markdownContent];
   }
 
@@ -74,7 +73,8 @@ internal sealed partial class DadJokePage : ContentPage
 
   private void HandleRefresh(object sender, object? args)
   {
-    RaiseItemsChanged(1);
+    RefreshJoke();
+    RaiseItemsChanged(0);
   }
 
   private static async Task<string?> GetJokeAsync()
