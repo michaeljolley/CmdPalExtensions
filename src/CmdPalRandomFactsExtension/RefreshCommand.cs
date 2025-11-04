@@ -1,6 +1,7 @@
 ﻿using Microsoft.CommandPalette.Extensions;
 using Microsoft.CommandPalette.Extensions.Toolkit;
 using Windows.Foundation;
+using CmdPalRandomFactsExtension.Properties;
 
 namespace CmdPalRandomFactsExtension;
 
@@ -10,8 +11,8 @@ internal sealed partial class RefreshCommand : InvokableCommand
 
   public RefreshCommand()
   {
-    Icon = new("\uE72C");
-    Name = "Refresh";
+    Icon = Icons.RefreshIcon;
+    Name = Resources.extension_commands_refresh;
     Id = "com.baldbeardedbuilder.cmdpal.randomfacts.refresh";
   }
 

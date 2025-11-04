@@ -3,9 +3,10 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
-
 using Microsoft.CommandPalette.Extensions;
 using Microsoft.CommandPalette.Extensions.Toolkit;
+using CmdPalRandomDadJokeExtension.Properties;
+using System.Diagnostics;
 
 namespace CmdPalRandomDadJokeExtension;
 
@@ -22,8 +23,8 @@ internal sealed partial class DadJokePage : ContentPage
 
   public DadJokePage()
   {
-    Name = "Random Dad Joke";
-    Icon = IconHelpers.FromRelativePath("Assets\\Square88x88Logo.png");
+    Name = Resources.extension_name;
+    Icon = Icons.DadJokeIcon;
     Id = "com.baldbeardedbuilder.cmdpal.randomdadjoke";
     _markdownContent = new MarkdownContent();
 
@@ -74,7 +75,7 @@ internal sealed partial class DadJokePage : ContentPage
   private void HandleRefresh(object sender, object? args)
   {
     RefreshJoke();
-    RaiseItemsChanged(0);
+    RaiseItemsChanged();
   }
 
   private static async Task<string?> GetJokeAsync()
@@ -97,7 +98,7 @@ internal sealed partial class DadJokePage : ContentPage
     }
     catch (Exception e)
     {
-      Console.WriteLine($"An error occurred: {e.Message}");
+      Debug.WriteLine($"An error occurred: {e.Message}");
     }
 
     return string.Empty;
@@ -110,5 +111,15 @@ internal sealed partial class DadJokePage : ContentPage
 ## {content}
 
 ";
+  }
+
+  public CommandItem ToCommandItem()
+  {
+    return new(this)
+    {
+      Title = Name,
+      Icon = Icon,
+      Subtitle = Resources.extension_subtitle,
+    };
   }
 }

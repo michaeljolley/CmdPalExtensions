@@ -1,18 +1,19 @@
-﻿using Microsoft.CommandPalette.Extensions;
+﻿using CmdPalRandomFactsExtension.Properties;
+using Microsoft.CommandPalette.Extensions;
 using Microsoft.CommandPalette.Extensions.Toolkit;
 
 namespace CmdPalRandomFactsExtension;
 
 public partial class CmdPalRandomFactsExtensionCommandsProvider : CommandProvider
 {
-  private readonly CommandItem factCommandItem = new(new FactsPage());
+  private readonly FactsPage factsPage = new();
 
   public CmdPalRandomFactsExtensionCommandsProvider()
   {
-    DisplayName = "Random Facts";
-    Icon = IconHelpers.FromRelativePath("Assets\\Square88x88Logo.png");
+    DisplayName = Resources.extension_name;
+    Icon = Icons.FactsIcon;
     Id = "com.baldbeardedbuilder.cmdpal.randomfacts";
   }
 
-  public override ICommandItem[] TopLevelCommands() => [factCommandItem];
+  public override ICommandItem[] TopLevelCommands() => [factsPage.ToCommandItem()];
 }

@@ -1,18 +1,19 @@
 ﻿using Microsoft.CommandPalette.Extensions;
 using Microsoft.CommandPalette.Extensions.Toolkit;
+using CmdPalRandomDadJokeExtension.Properties;
 
 namespace CmdPalRandomDadJokeExtension;
 
 public partial class CmdPalRandomDadJokeExtensionCommandsProvider : CommandProvider
 {
-  private readonly CommandItem jokeCommandItem = new(new DadJokePage());
+  private readonly DadJokePage dadJokePage = new();
 
   public CmdPalRandomDadJokeExtensionCommandsProvider()
   {
-    DisplayName = "Random Dad Joke";
-    Icon = IconHelpers.FromRelativePath("Assets\\Square88x88Logo.png");
+    DisplayName = Resources.extension_name;
+    Icon = Icons.DadJokeIcon;
     Id = "com.baldbeardedbuilder.cmdpal.randomdadjoke";
   }
 
-  public override ICommandItem[] TopLevelCommands() => [jokeCommandItem];
+  public override ICommandItem[] TopLevelCommands() => [dadJokePage.ToCommandItem()];
 }

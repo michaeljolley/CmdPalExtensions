@@ -3,9 +3,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
-
 using Microsoft.CommandPalette.Extensions;
 using Microsoft.CommandPalette.Extensions.Toolkit;
+using CmdPalRandomFactsExtension.Properties;
 
 namespace CmdPalRandomFactsExtension;
 
@@ -22,8 +22,8 @@ internal sealed partial class FactsPage : ContentPage
 
   public FactsPage()
   {
-    Name = "Random Facts";
-    Icon = IconHelpers.FromRelativePath("Assets\\Square88x88Logo.png");
+    Name = Resources.extension_name;
+    Icon = Icons.FactsIcon;
     _markdownContent = new MarkdownContent();
 
     _copyContextCommand = new CopyTextCommand(string.Empty);
@@ -109,5 +109,15 @@ internal sealed partial class FactsPage : ContentPage
 ## {content}
 
 ";
+  }
+
+  public CommandItem ToCommandItem()
+  {
+    return new(this)
+    {
+      Title = Name,
+      Icon = Icon,
+      Subtitle = Resources.extension_subtitle
+    };
   }
 }
