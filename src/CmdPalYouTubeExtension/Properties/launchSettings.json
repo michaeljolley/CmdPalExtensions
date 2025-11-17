@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "CmdPalYouTubeExtension (Package)": {
+      "commandName": "MsixPackage",
+      "doNotLaunchApp": true
+    },
+    "CmdPalYouTubeExtension (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
